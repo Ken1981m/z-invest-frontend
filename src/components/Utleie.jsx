@@ -10,6 +10,15 @@ function Utleie() {
           <li>
              <Link to="/leilighet">Registrer ny leilighet</Link>
           </li>
+          <li>
+              <Link to="/inntektregistrering">Registrer ny inntekt</Link>
+          </li>
+          <li>
+              <Link to="/utgiftregistrering">Registrer ny utgift</Link>
+          </li>
+          <li>
+              <Link to="/inntektregnskap">Inntekt regnskap</Link>
+          </li>
       </ul>
     </div>
   )

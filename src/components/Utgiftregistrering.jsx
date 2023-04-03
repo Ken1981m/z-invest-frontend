@@ -3,12 +3,12 @@ import { postParamData, fetchData } from './../utils/dataUtil.jsx';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-function Inntektregistrering() {
+function Utgiftregistrering() {
     const [leilighetRows, setLeilighetRows] = useState([]);
-    const [inntektTypeRows, setInntektTypeRows] = useState([]);
+    const [utgiftTypeRows, setUtgiftTypeRows] = useState([]);
 
     const [leilighetId, setleilighetId] = useState('');
-    const [inntektTypeId, setInntektTypeId] = useState('');
+    const [utgiftTypeId, setUtgiftTypeId] = useState('');
     const [dato, setDato] = useState(null);
     const [belop, setBelop] = useState('');
 
@@ -18,25 +18,25 @@ function Inntektregistrering() {
         .then(res => res.json())
         .then(data => setLeilighetRows(data));
 
-      fetchData('/hentInntektTyper')
+      fetchData('/hentUtgiftTyper')
         .then(res => res.json())
-        .then(data => setInntektTypeRows(data));
+        .then(data => setUtgiftTypeRows(data));
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const formatertDato = dato != null ? formatDate(dato) : null;
-        const data = { leilighetId, inntektTypeId, formatertDato, belop };
+        const data = { leilighetId, utgiftTypeId, formatertDato, belop };
         // transfer jsonData to backend REST controller method
-        postParamData('/leggTilInntekt', data);
+        postParamData('/leggTilUtgift', data);
     };
 
     const handleLeilighetIdChange = event => {
         setleilighetId(event.target.value);
     };
 
-    const handleInntektTypeIdChange = event => {
-        setInntektTypeId(event.target.value);
+    const handleUtgiftTypeIdChange = event => {
+        setUtgiftTypeId(event.target.value);
     };
 
     const formatDate = (date) => {
@@ -63,10 +63,10 @@ function Inntektregistrering() {
                       ))}
                 </select>
 
-                <h2>Inntekt type</h2>
-                <select value={inntektTypeId} onChange={handleInntektTypeIdChange}>
-                     <option key="">Velg inntekt type</option>
-                      {inntektTypeRows.map(row => (
+                <h2>Utgift type</h2>
+                <select value={utgiftTypeId} onChange={handleUtgiftTypeIdChange}>
+                     <option key="">Velg utgift type</option>
+                      {utgiftTypeRows.map(row => (
                         <option key={row.id} value={row.id}>{row.navn}</option>
                       ))}
                 </select>
@@ -91,4 +91,4 @@ function Inntektregistrering() {
     );
 }
 
-export default Inntektregistrering;
+export default Utgiftregistrering;

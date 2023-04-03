@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { postJsonData } from './../utils/dataUtil.jsx';
 function Leilighet() {
 
     const [formData, setFormData] = useState({
@@ -13,25 +13,7 @@ function Leilighet() {
         e.preventDefault();
         const jsonData = JSON.stringify(formData);
         // transfer jsonData to backend REST controller method
-        fetch('http://localhost:8080/leggTilLeilighet', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: jsonData
-        })
-        .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response;
-        })
-        .then(data => {
-             console.log(data);
-        })
-        .catch(error => {
-             console.error(error);
-        });
+        postJsonData('/leggTilLeilighet', jsonData);
     };
 
     const handleInputChange = (e) => {
