@@ -1,9 +1,10 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import Leilighet from './Leilighet';
 
-function Utleie() {
+export function Utleie() {
   return (
+    <>
     <div>
       <h1>Z-Invest</h1>
       <ul>
@@ -21,7 +22,6 @@ function Utleie() {
           </li>
       </ul>
     </div>
+    </>
   )
 }
-
-export default Utleie;

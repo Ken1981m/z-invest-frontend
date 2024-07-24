@@ -1,9 +1,12 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
-import { postParamData, fetchData } from './../utils/dataUtil.jsx';
+import { fetchData, postFormDataRequestOnUrl } from './../services/dataUtil.js';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { config } from '../config/config';
+import { Back } from './Back.js';
 
-function Utgiftregistrering() {
+export function Utgiftregistrering() {
     const [leilighetRows, setLeilighetRows] = useState([]);
     const [utgiftTypeRows, setUtgiftTypeRows] = useState([]);
 
@@ -12,23 +15,54 @@ function Utgiftregistrering() {
     const [dato, setDato] = useState(null);
     const [belop, setBelop] = useState('');
 
+    const [loading, setLoading] = useState(true);
+    const [responseMessage, setResponseMessage] = useState('');
+
+    const clearFormData = () => {
+      setleilighetId('');
+      setUtgiftTypeId('');
+      setDato(null);
+      setBelop('');
+    }
 
     useEffect(() => {
-      fetchData('/hentLeiligheter')
-        .then(res => res.json())
-        .then(data => setLeilighetRows(data));
+      fetchData(config.zInvestBackendUrl + 'hentLeiligheter')
+      .then(res => res)
+        .then(data => {
+            setLeilighetRows(data);
+        });
 
-      fetchData('/hentUtgiftTyper')
-        .then(res => res.json())
-        .then(data => setUtgiftTypeRows(data));
+      fetchData(config.zInvestBackendUrl + 'hentUtgiftTyper')
+      .then(res => res)
+        .then(data => {
+          setUtgiftTypeRows(data);
+          setLoading(false);  
+        });     
+
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const formatertDato = dato != null ? formatDate(dato) : null;
-        const data = { leilighetId, utgiftTypeId, formatertDato, belop };
-        // transfer jsonData to backend REST controller method
-        postParamData('/leggTilUtgift', data);
+        const formData = { leilighetId, utgiftTypeId, formatertDato, belop };
+
+        try {
+          postFormDataRequestOnUrl(config.zInvestBackendUrl + "leggTilUtgift", formData)
+          .then(res => res)
+          .then(data => {
+              if (data) {
+                setResponseMessage("Utgiften for " + formatertDato + " er lagret.");
+                clearFormData()
+              }
+              else {
+                setResponseMessage("Feilet ved lagring av inntekt");
+              }
+          });         
+    
+        } catch (error) {
+          console.error('There was a problem with the fetch operation:', error);
+          setResponseMessage('Error: ' + error.message);
+        }
     };
 
     const handleLeilighetIdChange = event => {
@@ -50,6 +84,8 @@ function Utgiftregistrering() {
       }
 
     return (
+      <>
+        <Back/>
         <div>
             <h1>Registrer ny inntekt</h1>
 
@@ -82,13 +118,13 @@ function Utgiftregistrering() {
                 <h2>Beløp</h2>
                 <input type="number" value={belop} onChange={handleBelopChange}/>
 
-                <div>
-                <button className="button-space" onClick={handleSubmit}>Lagre</button>
-                </div>
+                <p>
+                  <button className="button-space" onClick={handleSubmit}>Lagre</button>
+                </p>
             </form>
-        </div>
 
+            {responseMessage && <p>{responseMessage}</p>}
+        </div>
+      </>
     );
 }
-
-export default Utgiftregistrering;
