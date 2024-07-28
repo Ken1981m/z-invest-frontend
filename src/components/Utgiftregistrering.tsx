@@ -26,13 +26,13 @@ export function Utgiftregistrering() {
     }
 
     useEffect(() => {
-      fetchData(config.zInvestBackendUrl + 'hentLeiligheter')
+      fetchData(config.zInvestBackendUrl + 'search/hentLeiligheter')
       .then(res => res)
         .then(data => {
             setLeilighetRows(data);
         });
 
-      fetchData(config.zInvestBackendUrl + 'hentUtgiftTyper')
+      fetchData(config.zInvestBackendUrl + 'search/hentUtgiftTyper')
       .then(res => res)
         .then(data => {
           setUtgiftTypeRows(data);
@@ -47,7 +47,7 @@ export function Utgiftregistrering() {
         const formData = { leilighetId, utgiftTypeId, formatertDato, belop };
 
         try {
-          postFormDataRequestOnUrl(config.zInvestBackendUrl + "leggTilUtgift", formData)
+          postFormDataRequestOnUrl(config.zInvestBackendUrl + "persist/leggTilUtgift", formData)
           .then(res => res)
           .then(data => {
               if (data) {
@@ -87,7 +87,7 @@ export function Utgiftregistrering() {
       <>
         <Back/>
         <div>
-            <h1>Registrer ny inntekt</h1>
+            <h1>Registrer ny utgift</h1>
 
             <form onSubmit={handleSubmit}>
 

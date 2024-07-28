@@ -25,7 +25,7 @@ export function Leilighet() {
         const formData = { navn, adresse, postnr, poststed };
 
         try {
-          postFormDataRequestOnUrl(config.zInvestBackendUrl + "leggTilLeilighet", formData)
+          postFormDataRequestOnUrl(config.zInvestBackendUrl + "persist/leggTilLeilighet", formData)
           .then(res => res)
           .then(data => {
               if (data) {
@@ -41,7 +41,6 @@ export function Leilighet() {
           console.error('There was a problem with the fetch operation:', error);
           setResponseMessage('Error: ' + error.message);
         }
-
     };
 
     const handleNavnChange = event => {

@@ -7,6 +7,12 @@ const fetchData = async (url) => {
   }
 };
 
+function getUrlWithParamData(paramData) {
+  const searchParams = new URLSearchParams(paramData);
+  const paramUrl = "?" + searchParams.toString();
+  return paramUrl;
+}
+
 const postFormDataRequestOnUrl = async (url, formData) =>  {
   try {
       const response = await fetch(url, {
@@ -22,10 +28,26 @@ const postFormDataRequestOnUrl = async (url, formData) =>  {
   }
 };
 
-function getUrlWithParamData(paramData) {
-   const searchParams = new URLSearchParams(paramData);
-   const paramUrl = "?" + searchParams.toString();
-   return paramUrl;
+const postRequestOnUrl = async (url) =>  {
+  try {
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+      return response.json();
+  } catch (error) {
+      throw error;
+  }
+};
+
+const formatDate = (date) => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  return `${month}-${year}`;
 }
 
-export { fetchData, postFormDataRequestOnUrl, getUrlWithParamData }
+
+
+export { fetchData, getUrlWithParamData, postFormDataRequestOnUrl, postRequestOnUrl, formatDate }

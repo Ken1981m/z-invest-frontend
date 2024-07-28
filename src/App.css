@@ -51,11 +51,11 @@ th, td {
   text-align: left;
 }
 
-tr:nth-child(even) {  
+.striped-table tr:nth-child(even) {  
   background-color: #ffffff; /* White color for odd rows */  
 }
 
-tr:nth-child(odd) {
+.striped-table tr:nth-child(odd) {
   background-color: #f2f2f2; /* Grey color for even rows */
 }
 

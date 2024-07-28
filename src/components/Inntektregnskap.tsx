@@ -17,7 +17,7 @@ export function Inntektregnskap() {
    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-          fetchData(config.zInvestBackendUrl + 'hentLeiligheter')
+          fetchData(config.zInvestBackendUrl + 'search/hentLeiligheter')
           .then(res => res)
             .then(data => {
                 setLeilighetRows(data);
@@ -30,7 +30,7 @@ export function Inntektregnskap() {
             const formData = { leilighetId, aar };
             setLoading(true);
 
-            fetchData(config.zInvestBackendUrl + 'hentInntektRegnskap' + getUrlWithParamData(formData))
+            fetchData(config.zInvestBackendUrl + 'search/hentInntektRegnskap' + getUrlWithParamData(formData))
             .then(res => res)
               .then(data => {
                   setInntektData(data);
@@ -78,10 +78,10 @@ export function Inntektregnskap() {
 
         {inntektData.length > 0 ? (
 
-            <table>
+            <table className='striped-table'>
                  <tbody>
                     {inntektData.map((item) => (
-                        <tr className={lineUnder(item.label)} key={item.label}>
+                        <tr className={lineUnder(item.label)} key={item.id}>
                           <td>{item.label}</td>
                           <td>{item.belop}</td>
                         </tr>

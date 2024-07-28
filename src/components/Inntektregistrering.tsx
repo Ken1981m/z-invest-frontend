@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
-import { fetchData, postFormDataRequestOnUrl } from './../services/dataUtil.js';
+import { fetchData, formatDate, postFormDataRequestOnUrl } from './../services/dataUtil.js';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { config } from '../config/config.js';
@@ -12,6 +12,7 @@ export function Inntektregistrering() {
 
     const [leilighetId, setleilighetId] = useState('');
     const [inntektTypeId, setInntektTypeId] = useState('');
+    const [inntektTypeBeskrivelse, setInntektTypeBeskrivelse] = useState('');
     const [dato, setDato] = useState(null);
     const [belop, setBelop] = useState('');
 
@@ -23,16 +24,17 @@ export function Inntektregistrering() {
       setInntektTypeId('');
       setDato(null);
       setBelop('');
+      setInntektTypeBeskrivelse('');
     }
 
     useEffect(() => {
-      fetchData(config.zInvestBackendUrl + 'hentLeiligheter')
+      fetchData(config.zInvestBackendUrl + 'search/hentLeiligheter')
           .then(res => res)
             .then(data => {
                 setLeilighetRows(data);
             });
 
-      fetchData(config.zInvestBackendUrl + 'hentInntektTyper')
+      fetchData(config.zInvestBackendUrl + 'search/hentInntektTyper')
           .then(res => res)
             .then(data => {
               setInntektTypeRows(data);
@@ -47,7 +49,7 @@ export function Inntektregistrering() {
         const formData = { leilighetId, inntektTypeId, formatertDato, belop };
 
         try {
-          postFormDataRequestOnUrl(config.zInvestBackendUrl + "leggTilInntekt", formData)
+          postFormDataRequestOnUrl(config.zInvestBackendUrl + "persist/leggTilInntekt", formData)
           .then(res => res)
           .then(data => {
               if (data) {
@@ -72,17 +74,14 @@ export function Inntektregistrering() {
 
     const handleInntektTypeIdChange = event => {
         setInntektTypeId(event.target.value);
+        const inntektTypeRow =  inntektTypeRows.find(row => row.id === Number(event.target.value));
+        setInntektTypeBeskrivelse(inntektTypeRow.beskrivelse);
     };
 
-    const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-        return `${month}-${year}`;
-    }
-
+   
     function handleBelopChange(event) {
         setBelop(event.target.value);
-      }
+    }
 
     if (loading) {
         return <div>Loading...</div>;
@@ -112,6 +111,13 @@ export function Inntektregistrering() {
                         <option key={row.id} value={row.id}>{row.navn}</option>
                       ))}
                 </select>
+
+                {inntektTypeBeskrivelse && 
+                  <p>
+                    <b>Beskrivelse av valgte inntekt type: </b>
+                  {inntektTypeBeskrivelse}
+                  </p>
+                }
 
                 <h2>Dato</h2>
                 <DatePicker

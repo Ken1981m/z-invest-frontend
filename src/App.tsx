@@ -4,9 +4,17 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Utleie } from './components/Utleie';
 import { Leilighet } from './components/Leilighet';
+import { InntektTypeRegistrering } from './components/InntektTypeRegistrering';
 import { Inntektregistrering } from './components/Inntektregistrering';
 import { Utgiftregistrering } from './components/Utgiftregistrering';
 import { Inntektregnskap } from './components/Inntektregnskap';
+import { InntektTypeAdmin } from './components/InntektTypeAdmin';
+import { InntektTypeEdit } from './components/InntektTypeEdit';
+import { UtgiftTypeRegistrering } from './components/UtgiftTypeRegistrering';
+import { UtgiftTypeAdmin } from './components/UtgiftTypeAdmin';
+import { UtgiftTypeEdit } from './components/UtgiftTypeEdit';
+import { InntektAdmin } from './components/InntektAdmin';
+import { UtgiftAdmin } from './components/UtgiftAdmin';
 
 function App() {
    return (
@@ -14,9 +22,17 @@ function App() {
             <Routes>
               <Route path="/" element={<Utleie />} />
               <Route path="/leilighet" element={<Leilighet />} />
+              <Route path="/inntekttyperegistrering" element={<InntektTypeRegistrering />} />
+              <Route path="/inntekttypeadmin" element={<InntektTypeAdmin />} />
+              <Route path="/editInntektType" element={<InntektTypeEdit />} />
               <Route path="/inntektregistrering" element={<Inntektregistrering />} />
-              <Route path="/utgiftregistrering" element={<Utgiftregistrering />} />
+              <Route path="/inntektadmin" element={<InntektAdmin />} />
               <Route path="/inntektregnskap" element={<Inntektregnskap />} />
+              <Route path="/utgifttyperegistrering" element={<UtgiftTypeRegistrering />} />
+              <Route path="/utgifttypeadmin" element={<UtgiftTypeAdmin />} />
+              <Route path="/editUtgiftType" element={<UtgiftTypeEdit />} />
+              <Route path="/utgiftregistrering" element={<Utgiftregistrering />} />
+              <Route path="/utgiftadmin" element={<UtgiftAdmin />} />
             </Routes>
         </BrowserRouter>
    );
