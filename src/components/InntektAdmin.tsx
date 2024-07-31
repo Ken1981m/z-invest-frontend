@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { config } from '../config/config.js';
 import { Back } from './Back.js';
 import { useNavigate } from 'react-router-dom';
+import { hentMaaned } from '../services/maanedUtil';
 
 export function InntektAdmin() {
    const navigate = useNavigate();
@@ -17,11 +18,15 @@ export function InntektAdmin() {
    const [inntektTypeId, setInntektTypeId] = useState('');
    const [dato, setDato] = useState(null);
    const [belop, setBelop] = useState('');
+   const [beskrivelse, setBeskrivelse] = useState('');
 
    const [inntektData, setInntektData] = useState({});
 
    const [loading, setLoading] = useState(true);
    const [responseMessage, setResponseMessage] = useState('');
+
+   const [nydato, setNydato] = useState(null);
+   const [visLeggTilNyRadKnapp, setVisLeggTilNyRadKnapp] = useState(false);
 
     useEffect(() => {
           fetchData(config.zInvestBackendUrl + 'search/hentLeiligheter')
@@ -37,7 +42,12 @@ export function InntektAdmin() {
                 setInntektTypeRows(data);
            });              
 
-          if (leilighetId != null && inntektTypeId != null && dato != null) {
+          if ((leilighetId != null && leilighetId != '') && 
+              (inntektTypeId != null && inntektTypeId != '') &&
+               dato != null) {
+            setVisLeggTilNyRadKnapp(true);
+            setResponseMessage('');
+
             const aar = dato.getFullYear();
             const formData = { leilighetId, inntektTypeId, aar };
             setLoading(true);
@@ -67,14 +77,27 @@ export function InntektAdmin() {
           )
         );
     }
+
+    function handleBeskrivelseChange(id,event) {
+      const newValue = event.target.value;
+        setInntektData((prevData) =>
+          prevData.map((item) =>
+            item.id === id ? { ...item, beskrivelse: newValue } : item
+          )
+        );
+    }
     
-    const handleSubmit = (mnd, belop, label) => (e) => {
+    const handleSubmit = (mnd, belop, beskrivelse, label, nydata) => (e) => {
         e.preventDefault();
         const formatertDato = dato != null ? formatDate(dato) : null;
-        const formData = { leilighetId, inntektTypeId, formatertDato, mnd, belop };
+        const formData = { leilighetId, inntektTypeId, formatertDato, mnd, belop, beskrivelse };
+
+        const backendUrl = nydata 
+        ? config.zInvestBackendUrl + "persist/leggTilInntekt" 
+        : config.zInvestBackendUrl + "persist/oppdaterInntekt"
 
         try {
-            postFormDataRequestOnUrl(config.zInvestBackendUrl + "persist/oppdaterInntekt", formData)
+            postFormDataRequestOnUrl(backendUrl, formData)
             .then(res => res)
             .then(data => {
                 if (data) {
@@ -104,6 +127,31 @@ export function InntektAdmin() {
             });     
         }
     }
+
+    const leggTilNyInntektRad = () => {
+      const newItem = {
+          id: -1,
+          label: 'ny',
+          belop: 0,
+          mnd: 'ny'
+      };
+      setInntektData(prevData => [...prevData, newItem]);
+  };
+
+  const setItemMnd = (nyitem, date) => {
+      setInntektData((prevData) =>
+        prevData.map((item) =>
+          item.id === nyitem.id 
+          ? { ...item, 
+            id: hentMaaned(date.getMonth() + 1),
+            mnd: date.getMonth() + 1, 
+            label: hentMaaned(date.getMonth() + 1),
+            newrow: true } 
+          : item
+        )
+      );
+     
+  }
 
     if (loading) {
         return <div>Loading...</div>;
@@ -140,34 +188,54 @@ export function InntektAdmin() {
 
         {inntektData.length > 0 ? (
 
-          <form onSubmit={handleSubmit}>      
+          <form>      
             <table>
                 <thead>
                         <tr>
                             <th>Måned</th>
                             <th>Beløp</th>
+                            <th>Kommentar</th>
                             <th>Konfigurasjon</th>
                         </tr>
                         </thead>
                  <tbody>
                     {inntektData.map((item) => (
                         <tr key={item.id}>
-                          <td>{item.label}</td>
+                          <td> 
+                            {item.label === 'ny' ?  
+                                  <DatePicker
+                                        selected={nydato}
+                                        onChange={date => setItemMnd(item, date)}
+                                        minDate={new Date(dato.getFullYear(), 0, 1)}
+                                        maxDate={ new Date(dato.getFullYear(), 11, 31)}
+                                        dateFormat="MM/yyyy"
+                                        showMonthYearPicker
+                                  />
+                            : item.label}
+                      </td>
                           <td><input type="number" value={item.belop} onChange={(event) => handleBelopChange(item.id, event)}/></td>
+                          <td><textarea className="wide-textarea" type="text" value={item.beskrivelse} onChange={(event) => handleBeskrivelseChange(item.id, event)} /></td>
                           <td>
-                                <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.label)}>Oppdater</button>
+                                {item.id === -1 || item.newrow
+                                ? <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.beskrivelse, item.label, true)}>Lagre</button>
+                                : <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.beskrivelse, item.label, false)}>Oppdater</button>
+                                }
                                 <button onClick={() => handleSlett(item.id)}>Slett</button>
+                                
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-
           </form>
+          
          ) : (
              <p/>
          )}
-            {responseMessage && <p>{responseMessage}</p>}
+         
+         {visLeggTilNyRadKnapp && <button type="button" onClick={leggTilNyInntektRad}>Legg til ny inntekt</button>}
+
+            {responseMessage && <p>{responseMessage}</p>} 
         </>
       );
 

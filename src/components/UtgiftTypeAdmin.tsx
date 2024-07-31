@@ -56,6 +56,7 @@ export function UtgiftTypeAdmin() {
                         <tr>
                             <th>Navn</th>
                             <th>Beskrivelse</th>
+                            <th>Måned uavhengig</th>
                             <th>Konfigurasjon</th>
                         </tr>
                         </thead>
@@ -64,6 +65,7 @@ export function UtgiftTypeAdmin() {
                             <tr key={item.id}>
                             <td>{item.navn}</td>
                             <td>{item.beskrivelse}</td>
+                            <td>{item.mndUavhengig ? 'Ja' : 'Nei'}</td>
                             <td>
                                 <button onClick={() => handleRediger(item)}>Rediger</button>
                                 <button onClick={() => handleSlett(item.id)}>Slett</button>

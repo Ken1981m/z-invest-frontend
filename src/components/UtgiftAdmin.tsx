@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { config } from '../config/config.js';
 import { Back } from './Back.js';
 import { useNavigate } from 'react-router-dom';
+import { hentMaaned } from '../services/maanedUtil';
 
 export function UtgiftAdmin() {
    const navigate = useNavigate();
@@ -17,11 +18,15 @@ export function UtgiftAdmin() {
    const [utgiftTypeId, setUtgiftTypeId] = useState('');
    const [dato, setDato] = useState(null);
    const [belop, setBelop] = useState('');
+   const [beskrivelse, setBeskrivelse] = useState('');
 
    const [utgiftData, setUtgiftData] = useState({});
 
    const [loading, setLoading] = useState(true);
    const [responseMessage, setResponseMessage] = useState('');
+
+   const [nydato, setNydato] = useState(null);
+   const [visLeggTilNyRadKnapp, setVisLeggTilNyRadKnapp] = useState(false);
 
     useEffect(() => {
           fetchData(config.zInvestBackendUrl + 'search/hentLeiligheter')
@@ -37,7 +42,12 @@ export function UtgiftAdmin() {
                 setUtgiftTypeRows(data);
            });              
 
-          if (leilighetId != null && utgiftTypeId != null && dato != null) {
+          if ((leilighetId != null && leilighetId != '') && 
+              (utgiftTypeId != null && utgiftTypeId != '') &&
+               dato != null) {
+            setVisLeggTilNyRadKnapp(true);
+            setResponseMessage('');
+
             const aar = dato.getFullYear();
             const formData = { leilighetId, utgiftTypeId, aar };
             setLoading(true);
@@ -67,14 +77,28 @@ export function UtgiftAdmin() {
           )
         );
     }
+
+    function handleBeskrivelseChange(id,event) {
+      const newValue = event.target.value;
+        setUtgiftData((prevData) =>
+          prevData.map((item) =>
+            item.id === id ? { ...item, beskrivelse: newValue } : item
+          )
+        );
+    }
     
-    const handleSubmit = (mnd, belop, label) => (e) => {
+    const handleSubmit = (mndValg, belop, beskrivelse, label, nydata) => (e) => {
         e.preventDefault();
         const formatertDato = dato != null ? formatDate(dato) : null;
-        const formData = { leilighetId, utgiftTypeId, formatertDato, mnd, belop };
+        const mnd = mndValg === 'ikkevalgt' ? 13 : mnd;
+        const formData = { leilighetId, utgiftTypeId, formatertDato, mnd, belop, beskrivelse };
+
+        const backendUrl = nydata 
+        ? config.zInvestBackendUrl + "persist/leggTilUtgift" 
+        : config.zInvestBackendUrl + "persist/oppdaterUtgift"
 
         try {
-            postFormDataRequestOnUrl(config.zInvestBackendUrl + "persist/oppdaterUtgift", formData)
+            postFormDataRequestOnUrl(backendUrl, formData)
             .then(res => res)
             .then(data => {
                 if (data) {
@@ -104,6 +128,33 @@ export function UtgiftAdmin() {
             });     
         }
     }
+
+    const leggTilNyUtgiftRad = () => {
+      const newItem = {
+          id: -1,
+          label: 'ny',
+          belop: 0,
+          mnd: 'ikkevalgt',
+          mnduavhengig: 0,
+          newrow: true
+      };
+      setUtgiftData(prevData => [...prevData, newItem]);
+  };
+
+  const setItemMnd = (nyitem, date) => {
+      setUtgiftData((prevData) =>
+        prevData.map((item) =>
+          item.id === nyitem.id 
+          ? { ...item, 
+            id: hentMaaned(date.getMonth() + 1),
+            mnd: date.getMonth() + 1, 
+            label: hentMaaned(date.getMonth() + 1),
+             } 
+          : item
+        )
+      );
+     
+  }
 
     if (loading) {
         return <div>Loading...</div>;
@@ -140,34 +191,57 @@ export function UtgiftAdmin() {
 
         {utgiftData.length > 0 ? (
 
-          <form onSubmit={handleSubmit}>      
+          <form>      
             <table>
                 <thead>
                         <tr>
                             <th>Måned</th>
                             <th>Beløp</th>
+                            <th>Kommentar</th>
                             <th>Konfigurasjon</th>
                         </tr>
                         </thead>
                  <tbody>
                     {utgiftData.map((item) => (
                         <tr key={item.id}>
-                          <td>{item.label}</td>
+                          <td> 
+                            {item.label === 'ny' ?  
+                               (item.mnduavhengig === 0 ? 
+                                  <DatePicker
+                                        selected={nydato}
+                                        onChange={date => setItemMnd(item, date)}
+                                        minDate={new Date(dato.getFullYear(), 0, 1)}
+                                        maxDate={ new Date(dato.getFullYear(), 11, 31)}
+                                        dateFormat="MM/yyyy"
+                                        showMonthYearPicker
+                                  />
+                                  : 'Måneduavhengig'
+                               )
+                            : item.label}
+                      </td>
                           <td><input type="number" value={item.belop} onChange={(event) => handleBelopChange(item.id, event)}/></td>
+                          <td><textarea className="wide-textarea" type="text" value={item.beskrivelse} onChange={(event) => handleBeskrivelseChange(item.id, event)} /></td>
                           <td>
-                                <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.label)}>Oppdater</button>
+                                {item.newrow
+                                ? <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.beskrivelse, item.label, true)}>Lagre</button>
+                                : <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.beskrivelse, item.label, false)}>Oppdater</button>
+                                }
                                 <button onClick={() => handleSlett(item.id)}>Slett</button>
+                                
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-
           </form>
+          
          ) : (
              <p/>
          )}
-            {responseMessage && <p>{responseMessage}</p>}
+         
+         {visLeggTilNyRadKnapp && <button type="button" onClick={leggTilNyUtgiftRad}>Legg til ny utgift</button>}
+
+            {responseMessage && <p>{responseMessage}</p>} 
         </>
       );
 

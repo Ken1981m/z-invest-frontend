@@ -8,17 +8,19 @@ import { Back } from './Back';
 export function UtgiftTypeRegistrering() {
     const [navn, setNavn] = useState('');
     const [beskrivelse, setBeskrivelse] = useState('');
+    const [mnduavhengig, setMnduavhengig] = useState(0);
 
     const [responseMessage, setResponseMessage] = useState('');
 
     const clearFormData = () => {
         setNavn('');
         setBeskrivelse('');
+        setMnduavhengig('');
       }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = { navn, beskrivelse };
+        const formData = { navn, beskrivelse, mnduavhengig };
 
         try {
           postFormDataRequestOnUrl(config.zInvestBackendUrl + "persist/leggTilUtgiftType", formData)
@@ -47,6 +49,10 @@ export function UtgiftTypeRegistrering() {
         setBeskrivelse(event.target.value);
     };
 
+    const handleMnduavhengigChange = event => {
+      setMnduavhengig(event.target.checked ? 1 : 0);
+    };
+
     return (
         <>
         <Back/>
@@ -61,10 +67,17 @@ export function UtgiftTypeRegistrering() {
                 Beskrivelse:
                 <p>
                   <label>
-                    
                     <textarea type="text" name="beskrivelse" value={beskrivelse} onChange={handleBeskrivelseChange} />
                   </label>
-                </p>               
+                </p>     
+                Måned uavhengig:     
+                <p>
+                <input 
+                    type="checkbox" 
+                    checked={mnduavhengig === 1} 
+                    onChange={handleMnduavhengigChange} 
+                />
+                </p>     
                 <p>
                   <button onClick={handleSubmit}>Lagre</button>
                 </p>

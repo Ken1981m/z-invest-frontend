@@ -15,10 +15,12 @@ export function UtgiftTypeEdit() {
 
     const [navn, setNavn] = useState(item.navn);
     const [beskrivelse, setBeskrivelse] = useState(item.beskrivelse);
+    const [mnduavhengig, setMnduavhengig] = useState(item.mndUavhengig ? 1 : 0);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = { id, navn, beskrivelse };
+        const formData = { id, navn, beskrivelse, mnduavhengig };
 
         try {
           postFormDataRequestOnUrl(config.zInvestBackendUrl + "persist/oppdaterUtgiftType", formData)
@@ -46,6 +48,10 @@ export function UtgiftTypeEdit() {
         setBeskrivelse(event.target.value);
     };
 
+    const handleMnduavhengigChange = event => {
+      setMnduavhengig(event.target.checked ? 1 : 0);
+    };
+
     return (
         <>
             <Back/>
@@ -63,7 +69,15 @@ export function UtgiftTypeEdit() {
                     
                     <textarea type="text" name="beskrivelse" value={beskrivelse} onChange={handleBeskrivelseChange} />
                   </label>
-                </p>               
+                </p>   
+                Måned uavhengig:     
+                <p>
+                <input 
+                    type="checkbox" 
+                    checked={mnduavhengig === 1} 
+                    onChange={handleMnduavhengigChange} 
+                />
+                </p>                 
                 <p>
                   <button onClick={handleSubmit}>Lagre</button>
                 </p>
