@@ -90,7 +90,7 @@ export function UtgiftAdmin() {
     const handleSubmit = (mndValg, belop, beskrivelse, label, nydata) => (e) => {
         e.preventDefault();
         const formatertDato = dato != null ? formatDate(dato) : null;
-        const mnd = mndValg === 'ikkevalgt' ? 13 : mnd;
+        const mnd = mndValg === 'ikkevalgt' ? 13 : mndValg;
         const formData = { leilighetId, utgiftTypeId, formatertDato, mnd, belop, beskrivelse };
 
         const backendUrl = nydata 
