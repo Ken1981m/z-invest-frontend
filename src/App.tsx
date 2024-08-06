@@ -1,6 +1,10 @@
 // @ts-nocheck 
 import React, { useState } from 'react'
 import './App.css'
+import './styles/forms.scss';
+import './styles/mainpage.scss';
+import './styles/table-presentation.scss';
+import './styles/zinvest.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Utleie } from './components/Utleie';
 import { Leilighet } from './components/Leilighet';

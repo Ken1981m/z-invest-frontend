@@ -85,8 +85,8 @@ export function Utgiftregistrering() {
 
     return (
       <>
-        <Back/>
-        <div>
+        <div id="form-container">
+          <Back/>
             <h1>Registrer ny utgift</h1>
 
             <form onSubmit={handleSubmit}>
@@ -124,7 +124,7 @@ export function Utgiftregistrering() {
             </form>
 
             {responseMessage && <p>{responseMessage}</p>}
-        </div>
+          </div>    
       </>
     );
 }

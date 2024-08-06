@@ -1,0 +1,46 @@
+#table-presentation {
+    width: auto;
+    
+
+    thead {
+        background-color: SteelBlue;
+        color: white;
+    }
+
+    th, td {
+        // border: 1px solid #070707;
+        padding: 5px 10px;
+    }
+
+ 
+    input {
+        width: auto;
+    }
+
+    tbody tr:nth-child(even) {
+        background: rgb(151, 196, 235);
+    }
+    
+   
+    table {
+        font-family: "Helvetica Neue", Helvetica, sans-serif
+    }
+
+    button {
+        display: inline-block;
+        width: auto;
+        margin-bottom: 10px;
+        background-color: #c2e2d6;
+        font-weight: 600;
+        padding: 8px;
+        border-radius: 5px;
+        color: #000;
+        font-size: 16px;
+    }
+
+    textarea {
+        width: auto;  
+        height: 50px; 
+      }
+
+}

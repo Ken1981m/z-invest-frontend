@@ -1,4 +1,3 @@
-
 // @ts-nocheck
 import React, { useState } from 'react';
 import { postFormDataRequestOnUrl } from './../services/dataUtil.js';
@@ -48,23 +47,23 @@ export function InntektTypeRegistrering() {
     };
 
     return (
-        <>
-        <Back/>
-        <div>
+        <>        
+        <div id="form-container">
+          <Back/>
             <h1>Registrer ny inntekt type</h1>
             <form onSubmit={handleSubmit}>
-                <p>
+                <div className="form-group">
                   <label>
                     Navn: <input type="text" name="navn" value={navn} onChange={handleNavnChange} />
                   </label>
-                </p>
-                Beskrivelse:
-                <p>
+                </div>
+                
+                <div className="form-group">
                   <label>
-                    
+                    Beskrivelse:                  
                     <textarea type="text" name="beskrivelse" value={beskrivelse} onChange={handleBeskrivelseChange} />
                   </label>
-                </p>               
+                </div>               
                 <p>
                   <button onClick={handleSubmit}>Lagre</button>
                 </p>

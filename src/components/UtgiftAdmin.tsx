@@ -192,7 +192,7 @@ export function UtgiftAdmin() {
         {utgiftData.length > 0 ? (
 
           <form>      
-            <table>
+            <table id="table-presentation">
                 <thead>
                         <tr>
                             <th>Måned</th>

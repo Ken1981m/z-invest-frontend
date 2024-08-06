@@ -54,13 +54,13 @@ export function InntektTypeAdmin() {
             {inntektTypeRows.length > 0 && (
                 
                 <div>
-                    <table>
+                    <table id="table-presentation">
                         <thead>
-                        <tr>
-                            <th>Navn</th>
-                            <th>Beskrivelse</th>
-                            <th>Konfigurasjon</th>
-                        </tr>
+                            <tr>
+                                <th>Navn</th>
+                                <th>Beskrivelse</th>
+                                <th>Konfigurasjon</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {inntektTypeRows.map((item) => (

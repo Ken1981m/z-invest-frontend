@@ -1,0 +1,68 @@
+#form-container {
+    max-width: 525px;
+    margin: 0 auto;
+    padding-top: 100px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+   .form-group label {
+    display: block;
+    margin-bottom: 2px;
+    color: rgb(87, 84, 84);
+    font-family: 'Aptos', sans-serif; 
+  }
+
+   .form-group input, select {
+    display: block;
+    // width: 50%;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 6px;
+    font-size: 15px;
+  }
+
+  .form-group input {
+    height: 15px;
+  }
+ 
+
+  .form-group input:focus select:focus {
+    outline: 1px solid rgb(221, 182, 10);
+  }
+
+   button {
+    display: block;
+    // width: 30%;
+    margin-bottom: 10px;
+    background-color: #49c1a2;
+    // padding: 8px;
+    padding: 10px 20px;         // Adds space around the text inside the button
+  white-space: nowrap; 
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #37a08e;
+    cursor: pointer;
+  }
+
+  textarea {
+    width: 100%;  
+    height: 50px; 
+  }
+
+  @media (max-width: 768px) {
+    textarea {
+        width: 100%;  
+        height: 50px; 
+      }
+
+  }
+
+  

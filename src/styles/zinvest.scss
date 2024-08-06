@@ -1,0 +1,120 @@
+body {
+    background-color: #b1cef3;
+}
+
+  
+td {
+    // border: 1px solid #070707;
+    padding: 8px; /* Optional: padding for table cells */
+}
+
+.align-top {
+    vertical-align: top;
+  }
+
+h1 {
+    font-family: 'Aptos', sans-serif; 
+    margin: 0;
+    padding: 0; 
+    text-align: center;
+}
+
+
+h2, h3 {
+    font-family: 'Aptos', sans-serif; 
+    margin: 0;
+    padding: 0; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+b, p {
+    font-family: 'Aptos', sans-serif; 
+}
+
+
+
+ $border-color: #333;
+ $background-color: #f3f6f7; /* Black background color for ul */
+ $text-color: #dbf01d; /* White text color for contrast */
+ $button-background: #cbe2d9; /* Button background color */
+ $button-hover-background: darken($button-background, 10%); /* Button hover background color */
+ $button-active-background: darken($button-background, 20%); /* Button active background color */
+ $button-border-radius: 4px; /* Button border radius */
+ $button-padding: 10px 20px; /* Button padding */
+ $li-border-bottom: 1px solid #444;
+
+/* Style the ul element */
+ul.rectangle {
+    display: inline-block; /* Make ul's width flexible */
+    // border: 2px solid #131312;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    list-style-type: none; /* Remove default list styles */
+    background-color:#fafaf8f1;
+    color: $text-color; /* White text color */
+    width: auto; /* Allow ul width to adjust based on content */
+
+  /* Style the li elements inside the ul */
+  li {
+    display: block;
+    font-family: 'Aptos', sans-serif; 
+    background-color: $button-background;
+    color: $text-color;
+    padding: $button-padding;
+    margin: 5px 0; /* Space between buttons */
+    border: none;
+    border-radius: $button-border-radius;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap; /* Prevent text wrapping */
+    border-bottom: none; /* Remove border from li */
+    transition: background-color 0.3s;
+
+    a {
+        color: #000;
+    }
+
+    &:hover {
+      background-color: $button-hover-background;
+    }
+
+    &:active {
+      background-color: $button-active-background;
+    }
+
+    /* Ensure buttons take full width of ul when wrapping */
+    // width: 100%;
+
+    /* Add additional hover effect */
+    &:hover {
+      background-color: $button-hover-background;
+    }
+
+    &:last-child {
+      border-bottom: none; /* Remove border from the last li */
+    }
+  }
+}
+
+
+
+.back-button {
+    font-family: 'Aptos', sans-serif; 
+    background-color: #091b20;;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    width: 88px;
+  
+    &:hover {
+      background-color: lighten(#091720, 10%);
+    }
+ }
+
+
+
+ 

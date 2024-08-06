@@ -11,7 +11,7 @@ export function Back() {
 
     return (
         <div className="padded-bottom">
-            <button onClick={handleNavigateBack}>Tilbake</button>
+            <button className="back-button" onClick={handleNavigateBack}>Tilbake</button>
         </div>    
 
     )

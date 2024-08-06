@@ -62,8 +62,8 @@ export function Leilighet() {
 
     return (
       <>
-        <Back/>
-        <div>
+        <div id="form-container">
+            <Back/>
             <h1>Registrer ny leilighet</h1>
             <form onSubmit={handleSubmit}>
                 <p>
@@ -95,7 +95,7 @@ export function Leilighet() {
             </form>
 
             {responseMessage && <p>{responseMessage}</p>}
-        </div>
+          </div>
       </>
     )
 

@@ -90,27 +90,32 @@ export function Inntektregistrering() {
 
     return (
       <>
-        <Back/>
-        <div>
+      <div id="form-container">
+            <Back/>
+        
             <h1>Registrer ny inntekt</h1>
 
             <form onSubmit={handleSubmit}>
 
-                <h2>Leilighet</h2>
-                <select value={leilighetId} onChange={handleLeilighetIdChange}>
-                      <option key="">Velg leilighet</option>
-                      {leilighetRows.map(row => (
-                        <option key={row.id} value={row.id}>{row.navn}</option>
-                      ))}
-                </select>
+                <h3>Leilighet</h3>
+                <div className="form-group">
+                  <select value={leilighetId} onChange={handleLeilighetIdChange}>
+                        <option key="">Velg leilighet</option>
+                        {leilighetRows.map(row => (
+                          <option key={row.id} value={row.id}>{row.navn}</option>
+                        ))}
+                  </select>
+                </div>
 
-                <h2>Inntekt type</h2>
-                <select value={inntektTypeId} onChange={handleInntektTypeIdChange}>
-                     <option key="">Velg inntekt type</option>
-                      {inntektTypeRows.map(row => (
-                        <option key={row.id} value={row.id}>{row.navn}</option>
-                      ))}
-                </select>
+                <h3>Inntekt type</h3>
+                <div className="form-group">
+                  <select value={inntektTypeId} onChange={handleInntektTypeIdChange}>
+                      <option key="">Velg inntekt type</option>
+                        {inntektTypeRows.map(row => (
+                          <option key={row.id} value={row.id}>{row.navn}</option>
+                        ))}
+                  </select>
+                </div>
 
                 {inntektTypeBeskrivelse && 
                   <p>
@@ -119,17 +124,21 @@ export function Inntektregistrering() {
                   </p>
                 }
 
-                <h2>Dato</h2>
-                <DatePicker
-                     selected={dato}
-                     onChange={date => setDato(date)}
-                     dateFormat="MM/yyyy"
-                     showMonthYearPicker
-                />
+                <h3>Dato</h3>
+                <div className="form-group">
+                  <DatePicker
+                      selected={dato}
+                      onChange={date => setDato(date)}
+                      dateFormat="MM/yyyy"
+                      showMonthYearPicker
+                  />
+                </div>
 
-                <h2>Beløp</h2>
-                <input type="number" value={belop} onChange={handleBelopChange}/>
-
+                <h3>Beløp</h3>
+                <div className="form-group">
+                  <input type="number" value={belop} onChange={handleBelopChange}/>
+                </div>
+                
                 <p>
                   <button className="button-space" onClick={handleSubmit}>Lagre</button>
                 </p>

@@ -1,0 +1,37 @@
+#mainpage-table-presentation {
+
+    .container {
+        display: grid;
+        place-items: center;
+    }
+
+    .table-cell-inntekt {
+        width: 150px;
+    }
+      
+    .table-cell-utgift {
+        width: 150px;
+    }
+    
+    .table-cell-regnskap {
+        width: 200px;
+    }
+
+    @media (max-width: 768px) {
+        /* Change layout to stack cells vertically */
+        table {
+        display: grid;
+        grid-template-columns: 1fr;
+        }
+    
+        td {
+        display: block;
+        border-bottom: 1px solid #ccc;
+        }
+    
+        tr {
+        display: contents;
+        }
+    }
+
+}

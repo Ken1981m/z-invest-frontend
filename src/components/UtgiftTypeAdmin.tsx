@@ -51,7 +51,7 @@ export function UtgiftTypeAdmin() {
             {utgiftTypeRows.length > 0 && (
                 
                 <div>
-                    <table>
+                    <table id="table-presentation">
                         <thead>
                         <tr>
                             <th>Navn</th>

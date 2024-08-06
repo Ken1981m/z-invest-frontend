@@ -126,6 +126,9 @@ export function InntektAdmin() {
                 }
             });     
         }
+        else {
+          return;
+        }
     }
 
     const leggTilNyInntektRad = () => {
@@ -189,7 +192,7 @@ export function InntektAdmin() {
         {inntektData.length > 0 ? (
 
           <form>      
-            <table>
+            <table id="table-presentation">
                 <thead>
                         <tr>
                             <th>Måned</th>
@@ -220,7 +223,7 @@ export function InntektAdmin() {
                                 ? <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.beskrivelse, item.label, true)}>Lagre</button>
                                 : <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.beskrivelse, item.label, false)}>Oppdater</button>
                                 }
-                                <button onClick={() => handleSlett(item.id)}>Slett</button>
+                                <button className="button-space" onClick={() => handleSlett(item.id)}>Slett</button>
                                 
                             </td>
                         </tr>
