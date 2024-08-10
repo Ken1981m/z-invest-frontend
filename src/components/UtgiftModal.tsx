@@ -1,11 +1,17 @@
 // @ts-nocheck
 import React, { useState } from 'react';
 import '../styles/modal.scss';
+import ChevronIcon from './ChevronIcon';
 
 
 const UtgiftModal = ({ isOpen, onClose, utgiftData, aar }) => {
 
   const [expandedRow, setExpandedRow] = useState(null);
+
+  function toggleClose() {
+    setExpandedRow(null);
+    onClose();
+  }
 
   const toggleRow = (rowIndex) => {
        setExpandedRow(expandedRow === rowIndex ? null : rowIndex);
@@ -18,9 +24,10 @@ const UtgiftModal = ({ isOpen, onClose, utgiftData, aar }) => {
         <div className="modal-overlay">
             <div className="modal-content">
                 <h4>Utgifter for {aar}</h4>
-                <button onClick={onClose} className="modal-close button">
+                <button onClick={() => toggleClose()} className="modal-close button">
                 &times;
                 </button>
+               
 
                 {utgiftData.length > 0 ? (
 
@@ -31,6 +38,7 @@ const UtgiftModal = ({ isOpen, onClose, utgiftData, aar }) => {
                           <tr key={index} className="expandable-row" onClick={() => toggleRow(index)}>
                             <td key={index+1}>{item.label}</td>
                             <td key={index+2}>{item.belop}</td>
+                            <td><ChevronIcon/></td>
                           </tr>
                           
                           {expandedRow === index && (
@@ -38,6 +46,7 @@ const UtgiftModal = ({ isOpen, onClose, utgiftData, aar }) => {
                                   <tr key={detaljIndex}>
                                       <td key={detaljIndex+1}>{detalj.navn}</td>
                                       <td key={detaljIndex+2}>{detalj.belop}</td>
+                                      <td/>
                                   </tr>
                               ))
                           )}  
