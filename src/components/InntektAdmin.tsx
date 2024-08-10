@@ -101,7 +101,7 @@ export function InntektAdmin() {
             .then(res => res)
             .then(data => {
                 if (data) {
-                  setResponseMessage("Inntekten for " + label + " er oppdatert.");
+                  nydata ? setResponseMessage("Inntekten er lagret.") : setResponseMessage("Inntekten er oppdatert.");
                 }
                 else {
                   setResponseMessage("Feilet ved lagring av inntekt");

@@ -78,20 +78,20 @@ export function UtgiftAdmin() {
         );
     }
 
-    function handleBeskrivelseChange(id,event) {
+    function handleUtgiftBeskrivelseChange(id,event) {
       const newValue = event.target.value;
         setUtgiftData((prevData) =>
           prevData.map((item) =>
-            item.id === id ? { ...item, beskrivelse: newValue } : item
+            item.id === id ? { ...item, utgiftBeskrivelse: newValue } : item
           )
         );
     }
     
-    const handleSubmit = (mndValg, belop, beskrivelse, label, nydata) => (e) => {
+    const handleSubmit = (id, mndValg, belop, beskrivelse, label, nydata) => (e) => {
         e.preventDefault();
         const formatertDato = dato != null ? formatDate(dato) : null;
         const mnd = mndValg === 'ikkevalgt' ? 13 : mndValg;
-        const formData = { leilighetId, utgiftTypeId, formatertDato, mnd, belop, beskrivelse };
+        const formData = { id, leilighetId, utgiftTypeId, formatertDato, mnd, belop, beskrivelse };
 
         const backendUrl = nydata 
         ? config.zInvestBackendUrl + "persist/leggTilUtgift" 
@@ -102,7 +102,7 @@ export function UtgiftAdmin() {
             .then(res => res)
             .then(data => {
                 if (data) {
-                  setResponseMessage("Utgiften for " + label + " er oppdatert.");
+                  nydata ? setResponseMessage("Utgiften er lagret.") : setResponseMessage("Utgiften er oppdatert.");
                 }
                 else {
                   setResponseMessage("Feilet ved lagring av utgift");
@@ -222,11 +222,11 @@ export function UtgiftAdmin() {
                             }
                       </td>
                           <td><input type="number" value={item.belop} onChange={(event) => handleBelopChange(item.id, event)}/></td>
-                          <td><textarea className="wide-textarea" type="text" value={item.beskrivelse} onChange={(event) => handleBeskrivelseChange(item.id, event)} /></td>
+                          <td><textarea className="wide-textarea" type="text" value={item.utgiftBeskrivelse} onChange={(event) => handleUtgiftBeskrivelseChange(item.id, event)} /></td>
                           <td>
                                 {item.newrow
-                                ? <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.beskrivelse, item.label, true)}>Lagre</button>
-                                : <button className="button-space" onClick={handleSubmit(item.mnd, item.belop, item.beskrivelse, item.label, false)}>Oppdater</button>
+                                ? <button className="button-space" onClick={handleSubmit(-1, item.mnd, item.belop, item.utgiftBeskrivelse, item.label, true)}>Lagre</button>
+                                : <button className="button-space" onClick={handleSubmit(item.id, item.mnd, item.belop, item.utgiftBeskrivelse, item.label, false)}>Oppdater</button>
                                 }
                                 <button onClick={() => handleSlett(item.id)}>Slett</button>
                                 
