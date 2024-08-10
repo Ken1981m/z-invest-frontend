@@ -1,15 +1,10 @@
 // @ts-nocheck
 import React, { useState } from 'react';
 
-const ChevronIcon = () => {
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    const toggleExpand = () => {
-        setIsExpanded(!isExpanded);
-    };
+const ChevronIcon = ({expanded}) => {
 
     return (
-        <div onClick={toggleExpand} style={{ cursor: 'pointer' }}>
+        <div style={{ cursor: 'pointer' }}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -20,12 +15,11 @@ const ChevronIcon = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className={isExpanded ? 'icon-chevron-up' : 'icon-chevron-down'}
-                style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
+                className={expanded ? 'icon-chevron-up' : 'icon-chevron-down'}
+                style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
             >
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
-            {isExpanded && <p/>}
         </div>
     );
 };

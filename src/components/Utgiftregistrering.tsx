@@ -111,6 +111,7 @@ export function Utgiftregistrering() {
                 <DatePicker
                      selected={dato}
                      onChange={date => setDato(date)}
+                     minDate={new Date(2019,0,1)}
                      dateFormat="MM/yyyy"
                      showMonthYearPicker
                 />

@@ -111,6 +111,7 @@ export function Regnskap() {
                 <DatePicker
                      selected={dato}
                      onChange={dato => setDato(dato)}
+                     minDate={new Date(2019,0,1)}
                      dateFormat="yyyy"
                      showYearPicker
                 />
@@ -119,6 +120,7 @@ export function Regnskap() {
           <DatePicker
                selected={tilDato}
                onChange={dato => setTilDato(dato)}
+               minDate={new Date(2019,0,1)}
                dateFormat="yyyy"
                showYearPicker
           />
