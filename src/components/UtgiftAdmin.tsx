@@ -135,7 +135,7 @@ export function UtgiftAdmin() {
           label: 'ny',
           belop: 0,
           mnd: 'ikkevalgt',
-          mnduavhengig: 0,
+          mndUavhengig: false,
           newrow: true
       };
       setUtgiftData(prevData => [...prevData, newItem]);
@@ -205,8 +205,8 @@ export function UtgiftAdmin() {
                     {utgiftData.map((item) => (
                         <tr key={item.id}>
                           <td> 
-                            {item.label === 'ny' ?  
-                               (item.mnduavhengig === 0 ? 
+                            {item.label === 'ny' 
+                            ?  (!item.mndUavhengig ? 
                                   <DatePicker
                                         selected={nydato}
                                         onChange={date => setItemMnd(item, date)}
@@ -217,7 +217,9 @@ export function UtgiftAdmin() {
                                   />
                                   : 'Måneduavhengig'
                                )
-                            : item.label}
+                            : item.mndUavhengig ? 'Måneduavhengig' : item.label
+                            
+                            }
                       </td>
                           <td><input type="number" value={item.belop} onChange={(event) => handleBelopChange(item.id, event)}/></td>
                           <td><textarea className="wide-textarea" type="text" value={item.beskrivelse} onChange={(event) => handleBeskrivelseChange(item.id, event)} /></td>

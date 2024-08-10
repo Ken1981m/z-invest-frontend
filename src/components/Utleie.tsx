@@ -50,7 +50,7 @@ export function Utleie() {
               <h3>REGNSKAP</h3>
               <ul className="rectangle">
                 <li>
-                    <Link to="/inntektregnskap">Inntekt regnskap</Link>
+                    <Link to="/regnskap">Regnskap oversikt</Link>
                 </li>
               </ul>
             </td>

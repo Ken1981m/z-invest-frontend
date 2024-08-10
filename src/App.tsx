@@ -11,7 +11,7 @@ import { Leilighet } from './components/Leilighet';
 import { InntektTypeRegistrering } from './components/InntektTypeRegistrering';
 import { Inntektregistrering } from './components/Inntektregistrering';
 import { Utgiftregistrering } from './components/Utgiftregistrering';
-import { Inntektregnskap } from './components/Inntektregnskap';
+import { Regnskap } from './components/Regnskap';
 import { InntektTypeAdmin } from './components/InntektTypeAdmin';
 import { InntektTypeEdit } from './components/InntektTypeEdit';
 import { UtgiftTypeRegistrering } from './components/UtgiftTypeRegistrering';
@@ -31,7 +31,7 @@ function App() {
               <Route path="/editInntektType" element={<InntektTypeEdit />} />
               <Route path="/inntektregistrering" element={<Inntektregistrering />} />
               <Route path="/inntektadmin" element={<InntektAdmin />} />
-              <Route path="/inntektregnskap" element={<Inntektregnskap />} />
+              <Route path="/regnskap" element={<Regnskap />} />
               <Route path="/utgifttyperegistrering" element={<UtgiftTypeRegistrering />} />
               <Route path="/utgifttypeadmin" element={<UtgiftTypeAdmin />} />
               <Route path="/editUtgiftType" element={<UtgiftTypeEdit />} />
