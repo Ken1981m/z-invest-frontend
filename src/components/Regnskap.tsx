@@ -176,6 +176,16 @@ export function Regnskap() {
                                   </>
 
                               )}
+                              {item.label === "" && (
+                                <>
+                                <td/>
+                                {inntektData.map((item, index) => (
+                                    item.aar !== null 
+                                    ? <td/> 
+                                    : ""                
+                                ))}      
+                                </>
+                              )}
                           </tr>
                       ) : ""
                       ))}

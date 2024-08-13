@@ -24,24 +24,24 @@ export function Utleie() {
               <h3>INNTEKT</h3>
               <ul className="rectangle">
                   <li>
-                    <Link to="/inntekttyperegistrering">Registrer ny inntekt type</Link>
+                    <Link to="/inntektadmin">Administrer registrerte inntekter</Link>
                   </li>
                   <li>
                     <Link to="/inntekttypeadmin">Oversikt over inntekt type</Link>
-                  </li>
+                  </li>                  
                   <li>
                       <Link to="/inntektregistrering">Registrer ny inntekt</Link>
-                  </li>
+                  </li>  
                   <li>
-                    <Link to="/inntektadmin">Administrer registrerte inntekter</Link>
-                  </li>
+                    <Link to="/inntekttyperegistrering">Registrer ny inntekt type</Link>
+                  </li>                
               </ul>
             </td>
             <td className="table-cell-utgift align-top">
               <h3>UTGIFT</h3>
               <ul className="rectangle">
                 <li>
-                  <Link to="/utgifttyperegistrering">Registrer ny utgift type</Link>
+                  <Link to="/utgiftadmin">Administrer registrerte utgifter</Link>
                 </li>
                 <li>
                   <Link to="/utgifttypeadmin">Oversikt over utgift type</Link>
@@ -50,12 +50,12 @@ export function Utleie() {
                   <Link to="/utgiftregistrering">Registrer ny utgift</Link>
                 </li>
                 <li>
-                  <Link to="/utgiftadmin">Administrer registrerte utgifter</Link>
+                  <Link to="/utgifttyperegistrering">Registrer ny utgift type</Link>
                 </li>
               </ul>
             </td>            
             <td className="align-top">
-              <h3>DIVERSE KONFIGURASJON</h3>
+              <h3>KONFIGURASJON</h3>
               <ul className="rectangle">
                   <li>
                     <Link to="/leilighet">Registrer ny leilighet</Link>
