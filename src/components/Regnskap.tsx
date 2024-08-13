@@ -7,11 +7,12 @@ import { config } from '../config/config.js';
 import { Back } from './Back.js';
 import { ClipLoader } from 'react-spinners';
 import UtgiftModal from './UtgiftModal.js';
+import LeilighetValg from './LeilighetValg.js';
 
 export function Regnskap() {
    const [leilighetRows, setLeilighetRows] = useState({});
 
-   const [leilighetId, setleilighetId] = useState('');
+   const [leilighetIds, setLeilighetIds] = useState([]);
    const [dato, setDato] = useState(null);
    const [tilDato, setTilDato] = useState(null);
 
@@ -38,7 +39,7 @@ export function Regnskap() {
   function visUtgiftDetaljer(aar: string) {
     setUtgiftDataAar(aar);
 
-    const formData = { leilighetId, aar };
+    const formData = { leilighetIds, aar };
 
     fetchData(config.zInvestBackendUrl + 'search/hentUtgiftRegnskap' + getUrlWithParamData(formData))
           .then(res => res)
@@ -67,11 +68,11 @@ export function Regnskap() {
             });
            
 
-          if (leilighetId != null && dato != null && tilDato != null) {
+          if (leilighetIds != null && dato != null && tilDato != null) {
             const aarliste = genererAarListe(dato.getFullYear(), tilDato.getFullYear());
             const url = "search/hentInntektRegnskap";
 
-            const formData = { leilighetId, aarliste };
+            const formData = { leilighetIds, aarliste };
             
             setInntektLoading(true);
 
@@ -82,31 +83,39 @@ export function Regnskap() {
                   setInntektLoading(false);          
               });  
           }
-    }, [leilighetId, dato, tilDato]);
+    }, [leilighetIds, dato, tilDato]);
 
-    const handleLeilighetIdChange = event => {
-            setleilighetId(event.target.value);
-        };
+    function handleLeilighetIdChange(valgteLeilighetId: string, checked: boolean) {
+      setLeilighetIds((prevIds) => {
+        if (checked) {
+            return [...prevIds, valgteLeilighetId];
+        } else {
+            return prevIds.filter(id => id !== valgteLeilighetId);
+        }
+      });
+    };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+        <div className="spinner-container">
+            <ClipLoader />
+        <div>Loading...</div>
+        </div>
+        );
     }    
 
     const lineUnder = (label) => {
       return label === "" ? "line-under" : "";
     }
 
+
     return (
      <>
         <Back/>
         <h1>Regnskap oversikt</h1>
-        <h3>Leilighet</h3>
-                        <select value={leilighetId} onChange={handleLeilighetIdChange}>
-                              <option key="-1">Velg leilighet</option>
-                              {leilighetRows.map(row => (
-                                <option key={row.id} value={row.id}>{row.navn}</option>
-                              ))}
-                        </select>
+        <h3>Kryss av leilighetene du ønsker å se regnskap for:</h3>
+        <LeilighetValg leilighetRows={leilighetRows} handleLeilighetIdChange={handleLeilighetIdChange}/>
+
         <h3>Fra år</h3>
                 <DatePicker
                      selected={dato}

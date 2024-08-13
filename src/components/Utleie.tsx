@@ -12,6 +12,14 @@ export function Utleie() {
       <table className="container">
         <tbody>
           <tr>
+          <td className="align-top">
+              <h3>REGNSKAP</h3>
+              <ul className="rectangle">
+                <li>
+                    <Link to="/regnskap">Regnskap oversikt</Link>
+                </li>
+              </ul>
+            </td>
             <td className="table-cell-inntekt align-top"> 
               <h3>INNTEKT</h3>
               <ul className="rectangle">
@@ -45,17 +53,9 @@ export function Utleie() {
                   <Link to="/utgiftadmin">Administrer registrerte utgifter</Link>
                 </li>
               </ul>
-            </td>
+            </td>            
             <td className="align-top">
-              <h3>REGNSKAP</h3>
-              <ul className="rectangle">
-                <li>
-                    <Link to="/regnskap">Regnskap oversikt</Link>
-                </li>
-              </ul>
-            </td>
-            <td className="align-top">
-              <h3>Diverse konfigurasjon</h3>
+              <h3>DIVERSE KONFIGURASJON</h3>
               <ul className="rectangle">
                   <li>
                     <Link to="/leilighet">Registrer ny leilighet</Link>

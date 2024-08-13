@@ -38,7 +38,7 @@
     display: block;
     // width: 30%;
     margin-bottom: 10px;
-    background-color: #49c1a2;
+    background-color: #000;
     // padding: 8px;
     padding: 10px 20px;         // Adds space around the text inside the button
   white-space: nowrap; 
@@ -48,7 +48,7 @@
   }
 
   button:hover {
-    background-color: #37a08e;
+    background-color: lighten(#091720, 10%);
     cursor: pointer;
   }
 

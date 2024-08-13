@@ -31,34 +31,53 @@ const UtgiftModal = ({ isOpen, onClose, utgiftData, aar }) => {
                 </button>
                
 
-                {utgiftData.length > 0 ? (
-
-                    <table className="striped-table">
-                      <tbody>
-                        {utgiftData.map((item, index) => (
-                          <>
-                          <tr key={index} className="expandable-row" onClick={() => toggleRow(index)}>
-                            <td key={index+1}>{item.label}</td>
-                            <td key={index+2}>{item.belop}</td>                            
-                            <td><ChevronIcon expanded={expandedRow === index}/></td>
+                {Object.keys(utgiftData).length > 0 ? (
+                    Object.keys(utgiftData).map((leilighet, leilighetIndex) => (
+                      <table className="striped-table" key={`table-${leilighetIndex}`}>
+                        <tbody>
+                          <tr key={`leilighet-${leilighetIndex}`}>
+                            <td key={`leilighet-${leilighetIndex}-1`}><b>{leilighet}</b></td>
+                            <td key={`leilighet-${leilighetIndex}-2`}/>
+                            <td key={`leilighet-${leilighetIndex}-3`}/>
                           </tr>
-                          
-                          {expandedRow === index && (
-                              item.utgiftDetaljer.map((detalj, detaljIndex) => (
-                                  <tr key={detaljIndex}>
-                                      <td key={detaljIndex+1}>{detalj.navn}</td>
-                                      <td key={detaljIndex+2}>{detalj.belop}</td>
-                                      <td/>
-                                  </tr>
-                              ))
-                          )}  
-                        </>
-                        ))} 
-                    </tbody>
-                    </table>
-                  )
-                  : <p/>
-                }
+
+                          {utgiftData[leilighet].map((item, index) => {
+                            const uniqueRowId = leilighetIndex * 1000 + index;
+
+                            return (
+                              <>
+                                <tr key={uniqueRowId}
+                                  className="expandable-row"
+                                  onClick={() => toggleRow(uniqueRowId)}
+                                >
+                                  <td key={`item-${uniqueRowId}-1`}>{item.label}</td>
+                                  <td key={`item-${uniqueRowId}-2`}>{item.belop}</td>
+                                  <td key={`item-${uniqueRowId}-3`}>
+                                    <ChevronIcon expanded={expandedRow === uniqueRowId} />
+                                  </td>
+                                </tr>
+
+                                {expandedRow === uniqueRowId &&
+                                  item.utgiftDetaljer.map((detalj, detaljIndex) => (
+                                    <tr key={`detalj-${uniqueRowId}-${detaljIndex}`}>
+                                      <td key={`detalj-${uniqueRowId}-${detaljIndex}-1`}>
+                                        {detalj.navn}
+                                      </td>
+                                      <td key={`detalj-${uniqueRowId}-${detaljIndex}-2`}>
+                                        {detalj.belop}
+                                      </td>
+                                      <td key={`detalj-${uniqueRowId}-${detaljIndex}-3`} />
+                                    </tr>
+                                  ))}
+                              </>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    ))
+                  ) : (
+                    <p/>
+                  )}
                 
             </div>
         </div>

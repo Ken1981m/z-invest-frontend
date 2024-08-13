@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { config } from '../config/config.js';
 import { Back } from './Back.js';
+import { ClipLoader } from 'react-spinners';
 
 export function Inntektregistrering() {
     const [leilighetRows, setLeilighetRows] = useState([]);
@@ -84,8 +85,13 @@ export function Inntektregistrering() {
     }
 
     if (loading) {
-        return <div>Loading...</div>;
-    }    
+      return (
+      <div className="spinner-container">
+          <ClipLoader />
+      <div>Loading...</div>
+      </div>
+      );
+  }   
 
 
     return (

@@ -4,6 +4,7 @@ import { Back } from './Back';
 import { config } from '../config/config';
 import { fetchData, postRequestOnUrl } from '../services/dataUtil';
 import { useNavigate } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 
 export function InntektTypeAdmin() {
     const navigate = useNavigate();
@@ -44,7 +45,12 @@ export function InntektTypeAdmin() {
     }
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+        <div className="spinner-container">
+            <ClipLoader />
+        <div>Loading...</div>
+        </div>
+        );
     }   
 
     return (

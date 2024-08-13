@@ -19,13 +19,25 @@ h1 {
     text-align: center;
 }
 
+label {
+    font-family: 'Aptos', sans-serif; 
+}
 
-h2, h3 {
+h2 {
     font-family: 'Aptos', sans-serif; 
     margin: 0;
     padding: 0; 
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+h3 {
+  font-family: 'Aptos', sans-serif; 
+  // text-align: center;
+  margin: 0;
+  padding: 0; 
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 b, p {
@@ -38,7 +50,7 @@ b, p {
  $background-color: #f3f6f7; /* Black background color for ul */
  $text-color: #dbf01d; /* White text color for contrast */
  $button-background: #cbe2d9; /* Button background color */
- $button-hover-background: darken($button-background, 10%); /* Button hover background color */
+ $button-hover-background: #b1cef3; /* Button hover background color */
  $button-active-background: darken($button-background, 20%); /* Button active background color */
  $button-border-radius: 4px; /* Button border radius */
  $button-padding: 10px 20px; /* Button padding */
@@ -54,14 +66,16 @@ ul.rectangle {
     list-style-type: none; /* Remove default list styles */
     background-color:#fafaf8f1;
     color: $text-color; /* White text color */
+
     width: auto; /* Allow ul width to adjust based on content */
 
   /* Style the li elements inside the ul */
   li {
     display: block;
     font-family: 'Aptos', sans-serif; 
-    background-color: $button-background;
+    background-color: #dad9d9;
     color: $text-color;
+    font-weight: 600;
     padding: $button-padding;
     margin: 5px 0; /* Space between buttons */
     border: none;
@@ -74,6 +88,7 @@ ul.rectangle {
 
     a {
         color: #000;
+        text-decoration: none;
     }
 
     &:hover {

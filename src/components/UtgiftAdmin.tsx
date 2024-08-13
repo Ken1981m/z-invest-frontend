@@ -7,6 +7,7 @@ import { config } from '../config/config.js';
 import { Back } from './Back.js';
 import { useNavigate } from 'react-router-dom';
 import { hentMaaned } from '../services/maanedUtil';
+import { ClipLoader } from 'react-spinners';
 
 export function UtgiftAdmin() {
    const navigate = useNavigate();
@@ -156,9 +157,14 @@ export function UtgiftAdmin() {
      
   }
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }    
+  if (loading) {
+    return (
+    <div className="spinner-container">
+        <ClipLoader />
+    <div>Loading...</div>
+    </div>
+    );
+  }  
 
  
     return (
