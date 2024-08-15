@@ -167,9 +167,9 @@ export function Regnskap() {
                                       <td key={index}>
                                           {item.label === "Sum utgifter" 
                                             ? <a href="#" onClick={(e) => { e.preventDefault(); visUtgiftDetaljer(item.aarList[index]); }}>
-                                                {belop}
+                                                {Intl.NumberFormat('fr-FR').format(belop)}
                                               </a>
-                                            : belop
+                                            : Intl.NumberFormat('fr-FR').format(belop)
                                           }
                                       </td>
                                     ))}

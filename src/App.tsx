@@ -19,6 +19,8 @@ import { UtgiftTypeAdmin } from './components/UtgiftTypeAdmin';
 import { UtgiftTypeEdit } from './components/UtgiftTypeEdit';
 import { InntektAdmin } from './components/InntektAdmin';
 import { UtgiftAdmin } from './components/UtgiftAdmin';
+import { LeilighetAdmin } from './components/LeilighetAdmin';
+import { LeilighetEdit } from './components/LeilighetEdit';
 
 function App() {
    return (
@@ -26,6 +28,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Utleie />} />
               <Route path="/leilighet" element={<Leilighet />} />
+              <Route path="/leilighetadmin" element={<LeilighetAdmin />} />
+              <Route path="/editLeilighet" element={<LeilighetEdit />} />
               <Route path="/inntekttyperegistrering" element={<InntektTypeRegistrering />} />
               <Route path="/inntekttypeadmin" element={<InntektTypeAdmin />} />
               <Route path="/editInntektType" element={<InntektTypeEdit />} />

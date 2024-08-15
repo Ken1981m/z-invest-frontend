@@ -58,6 +58,9 @@ export function Utleie() {
               <h3>KONFIGURASJON</h3>
               <ul className="rectangle">
                   <li>
+                    <Link to="/leilighetadmin">Oversikt over leiligheter</Link>
+                  </li>
+                  <li>
                     <Link to="/leilighet">Registrer ny leilighet</Link>
                   </li>
               </ul>
