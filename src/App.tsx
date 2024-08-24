@@ -21,6 +21,8 @@ import { InntektAdmin } from './components/InntektAdmin';
 import { UtgiftAdmin } from './components/UtgiftAdmin';
 import { LeilighetAdmin } from './components/LeilighetAdmin';
 import { LeilighetEdit } from './components/LeilighetEdit';
+import { SkatteprosentAdmin } from './components/SkatteprosentAdmin';
+import { FaktiskBetaltSkatt } from './components/FaktiskBetaltSkatt';
 
 function App() {
    return (
@@ -41,6 +43,8 @@ function App() {
               <Route path="/editUtgiftType" element={<UtgiftTypeEdit />} />
               <Route path="/utgiftregistrering" element={<Utgiftregistrering />} />
               <Route path="/utgiftadmin" element={<UtgiftAdmin />} />
+              <Route path="/skatteprosentadmin" element={<SkatteprosentAdmin />} />
+              <Route path='/faktiskbetaltskattadmin' element={<FaktiskBetaltSkatt />} />
             </Routes>
         </BrowserRouter>
    );

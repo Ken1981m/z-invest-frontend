@@ -63,6 +63,12 @@ export function Utleie() {
                   <li>
                     <Link to="/leilighet">Registrer ny leilighet</Link>
                   </li>
+                  <li>
+                    <Link to="/skatteprosentadmin">Administrer skatteprosent</Link>
+                  </li>
+                  <li>
+                    <Link to="/faktiskbetaltskattadmin">Administrer faktisk betalt skatt</Link>
+                  </li>
               </ul>
             </td>
           </tr>

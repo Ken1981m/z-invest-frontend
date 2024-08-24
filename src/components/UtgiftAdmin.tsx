@@ -29,7 +29,19 @@ export function UtgiftAdmin() {
    const [nydato, setNydato] = useState(null);
    const [visLeggTilNyRadKnapp, setVisLeggTilNyRadKnapp] = useState(false);
 
-    useEffect(() => {
+   function hentUtgiftData() {
+      const aar = dato.getFullYear();
+      const formData = { leilighetId, utgiftTypeId, aar };
+      
+      fetchData(config.zInvestBackendUrl + 'search/hentUtgift' + getUrlWithParamData(formData))
+              .then(res => res)
+                .then(data => {
+                    setUtgiftData(data);
+                    setLoading(false);          
+                });  
+   }
+
+   useEffect(() => {
           fetchData(config.zInvestBackendUrl + 'search/hentLeiligheter')
           .then(res => res)
             .then(data => {
@@ -49,16 +61,10 @@ export function UtgiftAdmin() {
             setVisLeggTilNyRadKnapp(true);
             setResponseMessage('');
 
-            const aar = dato.getFullYear();
-            const formData = { leilighetId, utgiftTypeId, aar };
+           
             setLoading(true);
 
-            fetchData(config.zInvestBackendUrl + 'search/hentUtgift' + getUrlWithParamData(formData))
-            .then(res => res)
-              .then(data => {
-                  setUtgiftData(data);
-                  setLoading(false);          
-              });  
+            hentUtgiftData();
           }
     }, [leilighetId, utgiftTypeId, dato]);
 
@@ -103,6 +109,7 @@ export function UtgiftAdmin() {
             .then(res => res)
             .then(data => {
                 if (data) {
+                  hentUtgiftData();
                   nydata ? setResponseMessage("Utgiften er lagret.") : setResponseMessage("Utgiften er oppdatert.");
                 }
                 else {

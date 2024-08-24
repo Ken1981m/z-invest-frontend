@@ -29,7 +29,19 @@ export function InntektAdmin() {
    const [nydato, setNydato] = useState(null);
    const [visLeggTilNyRadKnapp, setVisLeggTilNyRadKnapp] = useState(false);
 
-    useEffect(() => {
+   function hentInntektData() {
+      const aar = dato.getFullYear();
+      const formData = { leilighetId, inntektTypeId, aar };
+
+      fetchData(config.zInvestBackendUrl + 'search/hentInntekt' + getUrlWithParamData(formData))
+        .then(res => res)
+        .then(data => {
+          setInntektData(data);
+          setLoading(false);
+        });
+  }
+
+   useEffect(() => {
           fetchData(config.zInvestBackendUrl + 'search/hentLeiligheter')
           .then(res => res)
             .then(data => {
@@ -49,16 +61,10 @@ export function InntektAdmin() {
             setVisLeggTilNyRadKnapp(true);
             setResponseMessage('');
 
-            const aar = dato.getFullYear();
-            const formData = { leilighetId, inntektTypeId, aar };
+            
             setLoading(true);
 
-            fetchData(config.zInvestBackendUrl + 'search/hentInntekt' + getUrlWithParamData(formData))
-            .then(res => res)
-              .then(data => {
-                  setInntektData(data);
-                  setLoading(false);          
-              });  
+            hentInntektData();  
           }
     }, [leilighetId, inntektTypeId, dato]);
 
@@ -102,6 +108,7 @@ export function InntektAdmin() {
             .then(res => res)
             .then(data => {
                 if (data) {
+                  hentInntektData();
                   nydata ? setResponseMessage("Inntekten er lagret.") : setResponseMessage("Inntekten er oppdatert.");
                 }
                 else {
