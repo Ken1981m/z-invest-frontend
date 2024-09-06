@@ -177,7 +177,7 @@ export function InntektAdmin() {
     return (
      <>
         <Back/>
-        <h1>Administrasjon av registrerte inntekter</h1>
+        <h1>Administrasjon av inntekter</h1>
         <h3>Leilighet</h3>
                 <select value={leilighetId} onChange={handleLeilighetIdChange}>
                     <option key="">Velg leilighet</option>

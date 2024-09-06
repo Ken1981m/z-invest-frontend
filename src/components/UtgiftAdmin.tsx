@@ -177,7 +177,7 @@ export function UtgiftAdmin() {
     return (
      <>
         <Back/>
-        <h1>Administrasjon av registrerte utgifter</h1>
+        <h1>Administrasjon av utgifter</h1>
         <h3>Leilighet</h3>
                 <select value={leilighetId} onChange={handleLeilighetIdChange}>
                     <option key="">Velg leilighet</option>

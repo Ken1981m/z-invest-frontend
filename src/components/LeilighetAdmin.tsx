@@ -56,6 +56,7 @@ export function LeilighetAdmin() {
                             <th>Adresse</th>
                             <th>Postnr</th>
                             <th>Poststed</th>
+                            <th>Beskrivelse</th>
                             <th>Konfigurasjon</th>
                         </tr>
                         </thead>
@@ -66,6 +67,7 @@ export function LeilighetAdmin() {
                             <td>{item.adresse}</td>
                             <td>{item.postnr}</td>
                             <td>{item.poststed}</td>
+                            <td>{item.beskrivelse}</td>
                             <td>
                                 <button onClick={() => handleRediger(item)}>Rediger</button>
                                 <button onClick={() => handleSlett(item.id)}>Slett</button>

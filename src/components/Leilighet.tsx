@@ -10,6 +10,7 @@ export function Leilighet() {
     const [adresse, setAdresse] = useState('');
     const [postnr, setPostnr] = useState('');
     const [poststed, setPoststed] = useState('');
+    const [beskrivelse, setBeskrivelse] = useState('');
 
     const [responseMessage, setResponseMessage] = useState('');
 
@@ -18,11 +19,12 @@ export function Leilighet() {
       setAdresse('');
       setPostnr('');
       setPoststed('');
+      setBeskrivelse('');
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = { navn, adresse, postnr, poststed };
+        const formData = { navn, adresse, postnr, poststed, beskrivelse };
 
         try {
           postFormDataRequestOnUrl(config.zInvestBackendUrl + "persist/leggTilLeilighet", formData)
@@ -59,6 +61,10 @@ export function Leilighet() {
       setPoststed(event.target.value);
     };
 
+    const handleBeskrivelseChange = event => {
+      setBeskrivelse(event.target.value);
+    };
+
 
     return (
       <>
@@ -88,6 +94,12 @@ export function Leilighet() {
                     Poststed:
                     <input type="text" name="poststed" value={poststed} onChange={handlePoststedChange} />
                   </label>
+                </p>
+                <p>
+                    <label>
+                      Beskrivelse:
+                      <textarea type="text" name="beskrivelse" value={beskrivelse} onChange={handleBeskrivelseChange} />
+                    </label>
                 </p>
                 <p>
                   <button onClick={handleSubmit}>Lagre</button>

@@ -24,14 +24,14 @@ export function Utleie() {
               <h3>INNTEKT</h3>
               <ul className="rectangle">
                   <li>
-                    <Link to="/inntektadmin">Administrer registrerte inntekter</Link>
+                    <Link to="/inntektadmin">Administrer inntekter</Link>
                   </li>
                   <li>
                     <Link to="/inntekttypeadmin">Oversikt over inntekt type</Link>
                   </li>                  
-                  <li>
+                  {/* <li>
                       <Link to="/inntektregistrering">Registrer ny inntekt</Link>
-                  </li>  
+                  </li>   */}
                   <li>
                     <Link to="/inntekttyperegistrering">Registrer ny inntekt type</Link>
                   </li>                
@@ -41,14 +41,14 @@ export function Utleie() {
               <h3>UTGIFT</h3>
               <ul className="rectangle">
                 <li>
-                  <Link to="/utgiftadmin">Administrer registrerte utgifter</Link>
+                  <Link to="/utgiftadmin">Administrer utgifter</Link>
                 </li>
                 <li>
                   <Link to="/utgifttypeadmin">Oversikt over utgift type</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/utgiftregistrering">Registrer ny utgift</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/utgifttyperegistrering">Registrer ny utgift type</Link>
                 </li>

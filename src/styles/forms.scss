@@ -53,13 +53,13 @@
   }
 
   textarea {
-    width: 100%;  
+    width: auto;  
     height: 50px; 
   }
 
   @media (max-width: 768px) {
     textarea {
-        width: 100%;  
+        width: auto;  
         height: 50px; 
       }
 
