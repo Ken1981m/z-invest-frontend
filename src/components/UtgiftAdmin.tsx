@@ -4,26 +4,22 @@ import { fetchData, formatDate, getUrlWithParamData, postFormDataRequestOnUrl, p
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { config } from '../config/config.js';
-import { Back } from './Back.js';
-import { useNavigate } from 'react-router-dom';
 import { hentMaaned } from '../services/maanedUtil';
 import { ClipLoader } from 'react-spinners';
 
-export function UtgiftAdmin() {
-   const navigate = useNavigate();
+type UtgiftAdminProps = {
+    leilighetId: string; // prop som skal sendes inn
+};
 
-   const [leilighetRows, setLeilighetRows] = useState({});
+export function UtgiftAdmin({ leilighetId }: UtgiftAdminProps) {
    const [utgiftTypeRows, setUtgiftTypeRows] = useState([]);
 
-   const [leilighetId, setLeilighetId] = useState('');
    const [utgiftTypeId, setUtgiftTypeId] = useState('');
    const [dato, setDato] = useState(null);
-   const [belop, setBelop] = useState('');
-   const [beskrivelse, setBeskrivelse] = useState('');
 
    const [utgiftData, setUtgiftData] = useState({});
 
-   const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(false);
    const [responseMessage, setResponseMessage] = useState('');
 
    const [nydato, setNydato] = useState(null);
@@ -42,13 +38,6 @@ export function UtgiftAdmin() {
    }
 
    useEffect(() => {
-          fetchData(config.zInvestBackendUrl + 'search/hentLeiligheter')
-          .then(res => res)
-            .then(data => {
-                setLeilighetRows(data);
-                setLoading(false);          
-            });
-           
           fetchData(config.zInvestBackendUrl + 'search/hentUtgiftTyper')
             .then(res => res)
               .then(data => {
@@ -68,10 +57,7 @@ export function UtgiftAdmin() {
           }
     }, [leilighetId, utgiftTypeId, dato]);
 
-    const handleLeilighetIdChange = event => {
-        setLeilighetId(event.target.value);
-    };
-    
+
     const handleUtgiftTypeIdChange = event => {
         setUtgiftTypeId(event.target.value);
     }
@@ -124,7 +110,7 @@ export function UtgiftAdmin() {
     }
 
     const handleSlett = (id) => {
-        var result = confirm("Vil du virkelig slette denne raden?");
+        const result = confirm("Vil du virkelig slette denne raden?");
         if (result) {
             setUtgiftData((prevData) => prevData.filter((item) => item.id !== id));
             postRequestOnUrl(config.zInvestBackendUrl + "persist/slettUtgift?id=" + id)
@@ -176,16 +162,6 @@ export function UtgiftAdmin() {
  
     return (
      <>
-        <Back/>
-        <h1>Administrasjon av utgifter</h1>
-        <h3>Leilighet</h3>
-                <select value={leilighetId} onChange={handleLeilighetIdChange}>
-                    <option key="">Velg leilighet</option>
-                        {leilighetRows.map(row => (
-                            <option key={row.id} value={row.id}>{row.navn}</option>
-                        ))}
-                </select>
-
         <h3>Utgift type</h3>
                 <select value={utgiftTypeId} onChange={handleUtgiftTypeIdChange}>
                      <option key="">Velg utgift type</option>
@@ -260,5 +236,4 @@ export function UtgiftAdmin() {
             {responseMessage && <p>{responseMessage}</p>} 
         </>
       );
-
 }

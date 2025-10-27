@@ -23,6 +23,7 @@ import { LeilighetAdmin } from './components/LeilighetAdmin';
 import { LeilighetEdit } from './components/LeilighetEdit';
 import { SkatteprosentAdmin } from './components/SkatteprosentAdmin';
 import { FaktiskBetaltSkatt } from './components/FaktiskBetaltSkatt';
+import {InntektUtgiftAdmin} from "./components/InntektUtgiftAdmin.tsx";
 
 function App() {
    return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="/inntekttypeadmin" element={<InntektTypeAdmin />} />
               <Route path="/editInntektType" element={<InntektTypeEdit />} />
               <Route path="/inntektregistrering" element={<Inntektregistrering />} />
+              <Route path="/inntektutgiftadmin" element={<InntektUtgiftAdmin />} />
               <Route path="/inntektadmin" element={<InntektAdmin />} />
               <Route path="/regnskap" element={<Regnskap />} />
               <Route path="/utgifttyperegistrering" element={<UtgiftTypeRegistrering />} />

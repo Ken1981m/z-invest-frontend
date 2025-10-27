@@ -4,26 +4,22 @@ import { fetchData, formatDate, getUrlWithParamData, postFormDataRequestOnUrl, p
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { config } from '../config/config.js';
-import { Back } from './Back.js';
-import { useNavigate } from 'react-router-dom';
 import { hentMaaned } from '../services/maanedUtil';
 import { ClipLoader } from 'react-spinners';
 
-export function InntektAdmin() {
-   const navigate = useNavigate();
+type InntektAdminProps = {
+    leilighetId: string; // prop som skal sendes inn
+};
 
-   const [leilighetRows, setLeilighetRows] = useState({});
+export function InntektAdmin({ leilighetId }: InntektAdminProps) {
    const [inntektTypeRows, setInntektTypeRows] = useState([]);
 
-   const [leilighetId, setLeilighetId] = useState('');
    const [inntektTypeId, setInntektTypeId] = useState('');
    const [dato, setDato] = useState(null);
-   const [belop, setBelop] = useState('');
-   const [beskrivelse, setBeskrivelse] = useState('');
 
    const [inntektData, setInntektData] = useState({});
 
-   const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(false);
    const [responseMessage, setResponseMessage] = useState('');
 
    const [nydato, setNydato] = useState(null);
@@ -42,18 +38,11 @@ export function InntektAdmin() {
   }
 
    useEffect(() => {
-          fetchData(config.zInvestBackendUrl + 'search/hentLeiligheter')
-          .then(res => res)
-            .then(data => {
-                setLeilighetRows(data);
-                setLoading(false);          
-            });
-           
           fetchData(config.zInvestBackendUrl + 'search/hentInntektTyper')
             .then(res => res)
               .then(data => {
                 setInntektTypeRows(data);
-           });              
+           });
 
           if ((leilighetId != null && leilighetId != '') && 
               (inntektTypeId != null && inntektTypeId != '') &&
@@ -61,17 +50,14 @@ export function InntektAdmin() {
             setVisLeggTilNyRadKnapp(true);
             setResponseMessage('');
 
-            
+
             setLoading(true);
 
-            hentInntektData();  
+            hentInntektData();
           }
     }, [leilighetId, inntektTypeId, dato]);
 
-    const handleLeilighetIdChange = event => {
-        setLeilighetId(event.target.value);
-    };
-    
+
     const handleInntektTypeIdChange = event => {
         setInntektTypeId(event.target.value);
     }
@@ -123,7 +109,7 @@ export function InntektAdmin() {
     }
 
     const handleSlett = (id) => {
-        var result = confirm("Vil du virkelig slette denne raden?");
+        const result = confirm("Vil du virkelig slette denne raden?");
         if (result) {
             setInntektData((prevData) => prevData.filter((item) => item.id !== id));
             postRequestOnUrl(config.zInvestBackendUrl + "persist/slettInntekt?id=" + id)
@@ -173,19 +159,8 @@ export function InntektAdmin() {
     );
 }    
 
- 
     return (
      <>
-        <Back/>
-        <h1>Administrasjon av inntekter</h1>
-        <h3>Leilighet</h3>
-                <select value={leilighetId} onChange={handleLeilighetIdChange}>
-                    <option key="">Velg leilighet</option>
-                        {leilighetRows.map(row => (
-                            <option key={row.id} value={row.id}>{row.navn}</option>
-                        ))}
-                </select>
-
         <h3>Inntekt type</h3>
                 <select value={inntektTypeId} onChange={handleInntektTypeIdChange}>
                      <option key="">Velg inntekt type</option>

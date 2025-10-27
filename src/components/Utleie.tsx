@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 
 export function Utleie() {
@@ -18,42 +18,11 @@ export function Utleie() {
                 <li>
                     <Link to="/regnskap">Regnskap oversikt</Link>
                 </li>
+                <li>
+                    <Link to="/inntektutgiftadmin">Administrer inntekter/utgifter</Link>
+                </li>
               </ul>
             </td>
-            <td className="table-cell-inntekt align-top"> 
-              <h3>INNTEKT</h3>
-              <ul className="rectangle">
-                  <li>
-                    <Link to="/inntektadmin">Administrer inntekter</Link>
-                  </li>
-                  <li>
-                    <Link to="/inntekttypeadmin">Oversikt over inntekt type</Link>
-                  </li>                  
-                  {/* <li>
-                      <Link to="/inntektregistrering">Registrer ny inntekt</Link>
-                  </li>   */}
-                  <li>
-                    <Link to="/inntekttyperegistrering">Registrer ny inntekt type</Link>
-                  </li>                
-              </ul>
-            </td>
-            <td className="table-cell-utgift align-top">
-              <h3>UTGIFT</h3>
-              <ul className="rectangle">
-                <li>
-                  <Link to="/utgiftadmin">Administrer utgifter</Link>
-                </li>
-                <li>
-                  <Link to="/utgifttypeadmin">Oversikt over utgift type</Link>
-                </li>
-                {/* <li>
-                  <Link to="/utgiftregistrering">Registrer ny utgift</Link>
-                </li> */}
-                <li>
-                  <Link to="/utgifttyperegistrering">Registrer ny utgift type</Link>
-                </li>
-              </ul>
-            </td>            
             <td className="align-top">
               <h3>KONFIGURASJON</h3>
               <ul className="rectangle">
@@ -68,6 +37,18 @@ export function Utleie() {
                   </li>
                   <li>
                     <Link to="/faktiskbetaltskattadmin">Administrer faktisk betalt skatt</Link>
+                  </li>
+                  <li>
+                      <Link to="/inntekttypeadmin">Oversikt over inntekt type</Link>
+                  </li>
+                  <li>
+                      <Link to="/inntekttyperegistrering">Registrer ny inntekt type</Link>
+                  </li>
+                  <li>
+                      <Link to="/utgifttypeadmin">Oversikt over utgift type</Link>
+                  </li>
+                  <li>
+                      <Link to="/utgifttyperegistrering">Registrer ny utgift type</Link>
                   </li>
               </ul>
             </td>
