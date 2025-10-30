@@ -48,6 +48,16 @@ const formatDate = (date) => {
   return `${month}-${year}`;
 }
 
+function genererListeAvFraTilParams(fra, til) {
+    const paramsListe = [];
+
+    for (let i = fra; i <= til; i++) {
+        paramsListe.push(i);
+    }
+
+    return paramsListe.join(';');
+}
 
 
-export { fetchData, getUrlWithParamData, postFormDataRequestOnUrl, postRequestOnUrl, formatDate }
+
+export { fetchData, getUrlWithParamData, postFormDataRequestOnUrl, postRequestOnUrl, formatDate, genererListeAvFraTilParams }

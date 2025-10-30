@@ -4,7 +4,7 @@ import { fetchData, formatDate, getUrlWithParamData, postFormDataRequestOnUrl, p
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { config } from '../config/config.js';
-import { hentMaaned } from '../services/maanedUtil';
+import { hentMaaned } from '../services/maanedUtil.js';
 import { ClipLoader } from 'react-spinners';
 
 type InntektAdminProps = {

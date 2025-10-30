@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
-import { fetchData, getUrlWithParamData } from '../services/dataUtil.js';
+import {fetchData, genererListeAvFraTilParams, getUrlWithParamData} from '../services/dataUtil.js';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { config } from '../config/config.js';
@@ -8,6 +8,7 @@ import { Back } from './Back.js';
 import { ClipLoader } from 'react-spinners';
 import UtgiftModal from './UtgiftModal.js';
 import LeilighetValg from './LeilighetValg.js';
+import {MonthSelect} from "./MaanedDropdown.tsx";
 
 export function Regnskap() {
    const [leilighetRows, setLeilighetRows] = useState({});
@@ -25,27 +26,22 @@ export function Regnskap() {
 
    const [isModalOpen, setIsModalOpen] = useState(false);
 
-   function genererAarListe(fraAaar, tilAar) {
-      const aarListe = [];
-    
-      for (let aar = fraAaar; aar <= tilAar; aar++) {
-        aarListe.push(aar);
-      }
-      
-      return aarListe.join(';');
-   }
+   const [visMaanedValg, setVisMaanedValg] = useState(false);
+   const [fraMaaned, setFraMaaned] = useState("");
+   const [tilMaaned, setTilMaaned] = useState("");
 
+   function visUtgiftDetaljer(aar: string) {
+        setUtgiftDataAar(aar);
 
-  function visUtgiftDetaljer(aar: string) {
-    setUtgiftDataAar(aar);
+       const mndListe = visMaanedValg ? `${fraMaaned};${tilMaaned}` : `1;12`;
 
-    const formData = { leilighetIds, aar };
+        const formData = { leilighetIds, aar, mndListe};
 
-    fetchData(config.zInvestBackendUrl + 'search/hentUtgiftRegnskap' + getUrlWithParamData(formData))
-          .then(res => res)
-            .then(data => {
-                setUtgiftData(data)
-            });
+        fetchData(config.zInvestBackendUrl + 'search/hentUtgiftRegnskap' + getUrlWithParamData(formData))
+              .then(res => res)
+                .then(data => {
+                    setUtgiftData(data)
+                });
   } 
 
   useEffect(() => {
@@ -66,24 +62,35 @@ export function Regnskap() {
                 setLeilighetRows(data);
                 setLoading(false);          
             });
-           
 
-          if (leilighetIds != null && dato != null && tilDato != null) {
-            const aarliste = genererAarListe(dato.getFullYear(), tilDato.getFullYear());
+  }, []);
+
+    useEffect(() => {
+        const maanedValgErOk = !visMaanedValg  ? true : fraMaaned !== "" && tilMaaned !== "";
+
+        if (leilighetIds != null && leilighetIds.length > 0 && dato != null && tilDato != null && maanedValgErOk) {
+
+            if (visMaanedValg && dato.getFullYear() !== tilDato.getFullYear()) {
+                alert("Fra og til år må være lik, dersom månedvalg aktiveres");
+                return;
+            }
+
+            const aarliste = genererListeAvFraTilParams(dato.getFullYear(), tilDato.getFullYear());
+            const mndListe = visMaanedValg ? `${fraMaaned};${tilMaaned}` : `1;12`;
             const url = "search/hentInntektRegnskap";
 
-            const formData = { leilighetIds, aarliste };
-            
+            const formData = { leilighetIds, aarliste, mndListe };
+
             setInntektLoading(true);
 
             fetchData(config.zInvestBackendUrl + url + getUrlWithParamData(formData))
             .then(res => res)
               .then(data => {
                   setInntektData(data);
-                  setInntektLoading(false);          
-              });  
+                  setInntektLoading(false);
+              });
           }
-    }, [leilighetIds, dato, tilDato]);
+    }, [leilighetIds, dato, tilDato, fraMaaned, tilMaaned]);
 
     function handleLeilighetIdChange(valgteLeilighetId: string, checked: boolean) {
       setLeilighetIds((prevIds) => {
@@ -108,6 +115,10 @@ export function Regnskap() {
       return label === "" ? "line-under" : "";
     }
 
+    const handleVisMaanedValgChange = event => {
+        setVisMaanedValg(event.target.checked ? true : false);
+    };
+
 
     return (
      <>
@@ -116,23 +127,42 @@ export function Regnskap() {
         <h3>Kryss av leilighetene du ønsker å se regnskap for:</h3>
         <LeilighetValg leilighetRows={leilighetRows} handleLeilighetIdChange={handleLeilighetIdChange}/>
 
-        <h3>Fra år</h3>
-                <DatePicker
-                     selected={dato}
-                     onChange={dato => setDato(dato)}
-                     minDate={new Date(2019,0,1)}
-                     dateFormat="yyyy"
-                     showYearPicker
-                />
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+           <h4>Aktiver månedvalg:</h4>
+           <input
+               type="checkbox"
+               checked={visMaanedValg}
+               onChange={handleVisMaanedValgChange}
+           />
+        </div>
 
-          <h3>Til år</h3>
-          <DatePicker
-               selected={tilDato}
-               onChange={dato => setTilDato(dato)}
-               minDate={new Date(2019,0,1)}
-               dateFormat="yyyy"
-               showYearPicker
-          />
+        <h3>Fra år</h3>
+        <DatePicker
+              selected={dato}
+              onChange={dato => setDato(dato)}
+              minDate={new Date(2019,0,1)}
+              dateFormat="yyyy"
+              showYearPicker
+        />
+
+        <h3>Til år</h3>
+        <DatePicker
+              selected={tilDato}
+              onChange={dato => setTilDato(dato)}
+              minDate={new Date(2019,0,1)}
+              dateFormat="yyyy"
+              showYearPicker
+        />
+
+         {visMaanedValg && (
+             <>
+                 <h3>Fra måned</h3>
+                 <MonthSelect value={fraMaaned} onChange={setFraMaaned} />
+
+                 <h3>Til måned</h3>
+                 <MonthSelect value={tilMaaned} onChange={setTilMaaned} />
+             </>
+         )}
 
         {inntektLoading ?
           <div className="spinner-container">
@@ -160,7 +190,7 @@ export function Regnskap() {
                               {item.label !== "" && (
                                   <>
                                     <td key={index}>
-                                      {item.label}                                      
+                                      {item.label}
                                     </td>
                                     
                                     {item.belopList.map((belop, index) => (
